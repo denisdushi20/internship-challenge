@@ -91,8 +91,9 @@ export default function UserDetails() {
           </div>
 
           <div className="buttons">
-            <button className="button button-edit" onClick={() => setIsEditing(true)}>Edit Profile</button>
             <Link to="/" className="button button-back">← Back</Link>
+            <button className="button button-edit" onClick={() => setIsEditing(true)}>Edit Profile</button>
+       
           </div>
         </>
       ) : (

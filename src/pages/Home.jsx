@@ -77,72 +77,74 @@ export default function Home() {
     return 0;
   });
 
+  const renderArrow = (field) => {
+    if (sortField === field) {
+      return sortOrder === "asc" ? "▲" : "▼";
+    }
+    return "△"; 
+  };
+
   return (
     <div className="home-container">
       <main className="main-content">
-       <div className="flex-container">
-      <div className="form-container">
-     <AddUserForm addUser={handleAddOrUpdateUser} />
-      </div>
+        <div className="flex-container">
+          <div className="form-container">
+            <AddUserForm addUser={handleAddOrUpdateUser} />
+          </div>
 
-       <div className="table-container">
-       <input
-        placeholder="Search by name or email"
-         value={search}
-         onChange={(e) => setSearch(e.target.value)}
-        className="search-input"
-          />
-
-         <div className="buttons" style={{ marginBottom: "15px" }}>
-         <button className="button button-edit" onClick={() => handleSort("name")}>
-           Sort by Name {sortField === "name" ? (sortOrder === "asc" ? "↑" : "↓") : ""}
-          </button>
-          <button className="button button-edit" onClick={() => handleSort("email")}>
-          Sort by Email {sortField === "email" ? (sortOrder === "asc" ? "↑" : "↓") : ""}
-          </button>
-           <button className="button button-edit" onClick={() => handleSort("company")}>
-            Sort by Company {sortField === "company" ? (sortOrder === "asc" ? "↑" : "↓") : ""}
-            </button>
-            </div>
+          <div className="table-container">
+            <input
+              placeholder="Search by name or email"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="search-input"
+            />
 
             <table className="table">
               <thead>
                 <tr>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Company</th>
+                  <th onClick={() => handleSort("name")} style={{ cursor: "pointer" }}>
+                    Name {renderArrow("name")}
+                  </th>
+                  <th onClick={() => handleSort("email")} style={{ cursor: "pointer" }}>
+                    Email {renderArrow("email")}
+                  </th>
+                  <th onClick={() => handleSort("company")} style={{ cursor: "pointer" }}>
+                    Company {renderArrow("company")}
+                  </th>
                   <th>Actions</th>
                 </tr>
               </thead>
-              <tbody>
-                {sortedUsers.map((user) => (
-                  <tr key={user.id}>
-                    <td>
-                      <Link to={`/users/${user.id}`} className="table-link">
-                        {user.name}
-                      </Link>
-                    </td>
-                    <td>
-                      <Link to={`/users/${user.id}`} className="table-link">
-                        {user.email}
-                      </Link>
-                    </td>
-                    <td>
-                      <Link to={`/users/${user.id}`} className="table-link">
-                        {user.company?.name ?? "NULL"}
-                      </Link>
-                    </td>
-                    <td>
-                      <button
-                        className="button button-delete"
-                        onClick={() => handleDeleteUser(user.id)}
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
+             <tbody>
+  {sortedUsers.map((user) => (
+    <tr key={user.id}>
+      <td style={{ padding: 0 }}>
+        <Link to={`/users/${user.id}`} className="table-link-cell">
+          {user.name}
+        </Link>
+      </td>
+      <td style={{ padding: 0 }}>
+        <Link to={`/users/${user.id}`} className="table-link-cell">
+          {user.email}
+        </Link>
+      </td>
+      <td style={{ padding: 0 }}>
+        <Link to={`/users/${user.id}`} className="table-link-cell">
+          {user.company?.name ?? "NULL"}
+        </Link>
+      </td>
+      <td>
+        <button
+          className="button button-delete"
+          onClick={() => handleDeleteUser(user.id)}
+        >
+          Delete
+        </button>
+      </td>
+    </tr>
+  ))}
+</tbody>
+
             </table>
           </div>
         </div>
