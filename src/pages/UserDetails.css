@@ -1,47 +1,106 @@
 .user-details-card {
-  max-width: 500px;
-  margin: 30px auto;
-  padding: 25px 30px;
-  background-color: #f9f9fb;
-  border-radius: 12px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-  text-align: left;
-  font-family: Arial, sans-serif;
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 30px 25px;
+  background: #f0f8ff; 
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  color: #0b5fff; 
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .user-details-card h2 {
-  text-align: center;
-  color: #0b5fff;
   margin-bottom: 20px;
+  color: #0b5fff;
+  text-align: center;
 }
 
 .user-info p {
-  margin: 8px 0;
-  line-height: 1.5;
-  font-size: 14.5px;
-  color: #333;
+  margin: 10px 0;
+  font-size: 16px;
 }
 
-.back-btn {
-  display: inline-block;
-  margin-top: 20px;
-  padding: 10px 16px;
-  background-color: #0b5fff;
-  color: white;
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.edit-form label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+  color: #0b5fff;
+}
+
+.input-field {
+  padding: 10px 12px;
+  border: 1px solid #0b5fff;
   border-radius: 8px;
-  text-decoration: none;
-  font-weight: bold;
-  transition: background-color 0.2s, transform 0.2s;
+  font-size: 14px;
+  margin-top: 6px;
+  transition: all 0.2s ease-in-out;
 }
 
-.back-btn:hover {
-  background-color: #084bcc;
-  transform: translateY(-2px);
+.input-field:focus {
+  outline: none;
+  border-color: #28a745;
+  box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
+}
+
+.buttons {
+  margin-top: 25px;
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+.button {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease-in-out;
+}
+
+.button-edit {
+  background: #0b5fff;
+  color: white;
+}
+
+.button-edit:hover {
+  background: #084ecf;
+}
+
+.button-save {
+  background: #28a745;
+  color: white;
+}
+
+.button-save:hover {
+  background: #218838;
+}
+
+.button-cancel {
+  background: #dc3545;
+  color: white;
+}
+
+.button-cancel:hover {
+  background: #c82333;
+}
+
+.button-back {
+  background: #6c757d;
+  color: white;
+  text-decoration: none;
+  display: inline-block;
+  line-height: 1.5;
 }
 
 .loading {
   text-align: center;
-  color: #777;
-  margin-top: 50px;
-  font-size: 16px;
+  font-size: 18px;
+  color: #0b5fff;
 }

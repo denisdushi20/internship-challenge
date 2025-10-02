@@ -89,16 +89,11 @@ export default function Home() {
                     </td>
                     <td>
                       <Link to={`/users/${user.id}`} className="table-link">
-                        {user.company?.name ?? "N/A"}
+                        {user.company?.name ?? "NULL"}
                       </Link>
                     </td>
                     <td>
-                      <button
-                        className="button"
-                        onClick={() => setEditingUser(user)}
-                      >
-                        Edit
-                      </button>
+                     
                       <button
                         className="button button-delete"
                         onClick={() => handleDeleteUser(user.id)}
