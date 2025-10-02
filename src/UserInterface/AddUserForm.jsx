@@ -9,6 +9,19 @@ export default function AddUserForm({ addUser }) {
     e.preventDefault();
     if (!name || !email || !company) return alert("All fields are required");
 
+     if (!/^[A-Z]/.test(name)) {
+      return alert("Name must start with a capital letter");
+    }
+    if(!/^[A-Z]/.test(company)){
+        return alert("Company must start with a capital letter")
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return alert("Invalid email format,email must contain @");
+    }
+    if (!email.includes(".com")) {
+      return alert("Email must end with .com");
+    }
+
     const newUser = {
       id: Date.now(),
       name,
