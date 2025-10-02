@@ -11,6 +11,8 @@ export default function Home() {
   const [fetchedUsers, setFetchedUsers] = useState([]); 
   const [search, setSearch] = useState("");
   const [editingUser, setEditingUser] = useState(null);
+  const [sortField, setSortField] = useState(""); 
+  const [sortOrder, setSortOrder] = useState("asc"); 
 
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/users")
@@ -24,7 +26,6 @@ export default function Home() {
       if (reduxUsers.find((u) => u.id === user.id)) {
         dispatch(updateUser(user));
       } else {
-       
         setFetchedUsers((prev) => prev.map((u) => (u.id === user.id ? user : u)));
       }
       setEditingUser(null);
@@ -41,6 +42,15 @@ export default function Home() {
     }
   };
 
+  const handleSort = (field) => {
+    if (sortField === field) {
+      setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+    } else {
+      setSortField(field);
+      setSortOrder("asc");
+    }
+  };
+
   const allUsers = [...reduxUsers, ...fetchedUsers];
   const filteredUsers = allUsers.filter(
     (u) =>
@@ -48,24 +58,54 @@ export default function Home() {
       u.email.toLowerCase().includes(search.toLowerCase())
   );
 
+  const sortedUsers = [...filteredUsers].sort((a, b) => {
+    if (!sortField) return 0;
+
+    let aVal = a[sortField];
+    let bVal = b[sortField];
+
+    if (sortField === "company") {
+      aVal = a.company?.name ?? "";
+      bVal = b.company?.name ?? "";
+    }
+
+    if (typeof aVal === "string") aVal = aVal.toLowerCase();
+    if (typeof bVal === "string") bVal = bVal.toLowerCase();
+
+    if (aVal < bVal) return sortOrder === "asc" ? -1 : 1;
+    if (aVal > bVal) return sortOrder === "asc" ? 1 : -1;
+    return 0;
+  });
+
   return (
-  <div className="home-container">
+    <div className="home-container">
+      <main className="main-content">
+       <div className="flex-container">
+      <div className="form-container">
+     <AddUserForm addUser={handleAddOrUpdateUser} />
+      </div>
 
-    <main className="main-content">
-      <div className="flex-container">
-        <div className="form-container">
-          <AddUserForm addUser={handleAddOrUpdateUser} />
-        </div>
-
-        <div className="table-container">
-          <input
-            placeholder="Search by name or email"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="search-input"
+       <div className="table-container">
+       <input
+        placeholder="Search by name or email"
+         value={search}
+         onChange={(e) => setSearch(e.target.value)}
+        className="search-input"
           />
 
-           <table className="table">
+         <div className="buttons" style={{ marginBottom: "15px" }}>
+         <button className="button button-edit" onClick={() => handleSort("name")}>
+           Sort by Name {sortField === "name" ? (sortOrder === "asc" ? "↑" : "↓") : ""}
+          </button>
+          <button className="button button-edit" onClick={() => handleSort("email")}>
+          Sort by Email {sortField === "email" ? (sortOrder === "asc" ? "↑" : "↓") : ""}
+          </button>
+           <button className="button button-edit" onClick={() => handleSort("company")}>
+            Sort by Company {sortField === "company" ? (sortOrder === "asc" ? "↑" : "↓") : ""}
+            </button>
+            </div>
+
+            <table className="table">
               <thead>
                 <tr>
                   <th>Name</th>
@@ -75,7 +115,7 @@ export default function Home() {
                 </tr>
               </thead>
               <tbody>
-                {filteredUsers.map((user) => (
+                {sortedUsers.map((user) => (
                   <tr key={user.id}>
                     <td>
                       <Link to={`/users/${user.id}`} className="table-link">
@@ -93,7 +133,6 @@ export default function Home() {
                       </Link>
                     </td>
                     <td>
-                     
                       <button
                         className="button button-delete"
                         onClick={() => handleDeleteUser(user.id)}
@@ -105,10 +144,9 @@ export default function Home() {
                 ))}
               </tbody>
             </table>
+          </div>
         </div>
-      </div>
-    </main>
-  </div>
-);
-
+      </main>
+    </div>
+  );
 }
