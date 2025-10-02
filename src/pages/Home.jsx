@@ -49,47 +49,71 @@ export default function Home() {
   );
 
   return (
-    <div className="home-container">
-      <main className="main-content">
-        <AddUserForm addUser={handleAddOrUpdateUser} editingUser={editingUser} />
+  <div className="home-container">
 
-        <input
-          placeholder="Search by name or email"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="search-input"
-        />
+    <main className="main-content">
+      <div className="flex-container">
+        <div className="form-container">
+          <AddUserForm addUser={handleAddOrUpdateUser} />
+        </div>
 
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Company</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredUsers.map((user) => (
-              <tr key={user.id}>
-                <td>
-                  <Link to={`/users/${user.id}`} className="link">{user.name}</Link>
-                </td>
-                <td>{user.email}</td>
-                <td>{user.company?.name ?? "N/A"}</td>
-                <td>
-                  <button className="button" onClick={() => setEditingUser(user)}>Edit</button>
-                  <button className="button button-delete" onClick={() => handleDeleteUser(user.id)}>Delete</button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </main>
+        <div className="table-container">
+          <input
+            placeholder="Search by name or email"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="search-input"
+          />
 
-      <footer className="footer">
-        &copy; {new Date().getFullYear()} User Management App
-      </footer>
-    </div>
-  );
+           <table className="table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Company</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredUsers.map((user) => (
+                  <tr key={user.id}>
+                    <td>
+                      <Link to={`/users/${user.id}`} className="table-link">
+                        {user.name}
+                      </Link>
+                    </td>
+                    <td>
+                      <Link to={`/users/${user.id}`} className="table-link">
+                        {user.email}
+                      </Link>
+                    </td>
+                    <td>
+                      <Link to={`/users/${user.id}`} className="table-link">
+                        {user.company?.name ?? "N/A"}
+                      </Link>
+                    </td>
+                    <td>
+                      <button
+                        className="button"
+                        onClick={() => setEditingUser(user)}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        className="button button-delete"
+                        onClick={() => handleDeleteUser(user.id)}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+        </div>
+      </div>
+    </main>
+  </div>
+);
+
 }

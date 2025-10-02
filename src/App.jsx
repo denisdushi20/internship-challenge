@@ -18,9 +18,7 @@ function App() {
         <header style={headerStyle}>
           <h1>Internship Challenge</h1>
           <nav>
-            <Link to="/" style={{ color: "white", textDecoration: "none" }}>
-              Home
-            </Link>
+            
           </nav>
         </header>
         <main style={{ padding: 16 }}>
@@ -40,9 +38,13 @@ function App() {
 const headerStyle = {
   background: "#0b5fff",
   color: "white",
-  padding: "12px 16px",
+  padding: "15px 0",
+  width: "100%",
   textAlign: "center",
+  fontSize: "24px",
+  fontWeight: "bold",
 };
+
 
 const footerStyle = {
   background: "#eee",
