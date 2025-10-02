@@ -1,18 +1,27 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const initialState = JSON.parse(localStorage.getItem("reduxUsers") || "[]");
+
 const usersSlice = createSlice({
   name: "users",
-  initialState: [], 
+  initialState,
   reducers: {
-    setUsers: (state, action) => action.payload, 
-    addUser: (state, action) => [action.payload, ...state],
-    updateUser: (state, action) => {
-      const index = state.findIndex((u) => u.id === action.payload.id);
-      if (index !== -1) state[index] = action.payload;
+    addUser: (state, action) => {
+      state.unshift(action.payload);
+      localStorage.setItem("reduxUsers", JSON.stringify(state));
     },
-    deleteUser: (state, action) => state.filter((u) => u.id !== action.payload),
+    updateUser: (state, action) => {
+      const idx = state.findIndex((u) => u.id === action.payload.id);
+      if (idx !== -1) state[idx] = action.payload;
+      localStorage.setItem("reduxUsers", JSON.stringify(state));
+    },
+    deleteUser: (state, action) => {
+      const updated = state.filter((u) => u.id !== action.payload);
+      localStorage.setItem("reduxUsers", JSON.stringify(updated));
+      return updated;
+    },
   },
 });
 
-export const { setUsers, addUser, updateUser, deleteUser } = usersSlice.actions;
+export const { addUser, updateUser, deleteUser } = usersSlice.actions;
 export default usersSlice.reducer;

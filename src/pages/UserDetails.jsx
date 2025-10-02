@@ -1,26 +1,34 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import "./UserDetails.css";
 
-
-export default function UserDetails({ users }) {
+export default function UserDetails() {
   const { id } = useParams();
+  const reduxUsers = useSelector((state) => state.users);
+  const [fetchedUsers, setFetchedUsers] = useState([]);
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const localUser = users?.find((u) => String(u.id) === id);
+    fetch("https://jsonplaceholder.typicode.com/users")
+      .then((res) => res.json())
+      .then(setFetchedUsers)
+      .catch(console.error);
+  }, []);
+
+  useEffect(() => {
+    const localUser = reduxUsers.find((u) => String(u.id) === id);
     if (localUser) {
       setUser(localUser);
     } else {
-      fetch(`https://jsonplaceholder.typicode.com/users/${id}`)
-        .then((res) => {
-          if (!res.ok) throw new Error("User not found");
-          return res.json();
-        })
-        .then(setUser)
-        .catch(() => setUser(null));
+      const fetchedUser = fetchedUsers.find((u) => String(u.id) === id);
+      if (fetchedUser) {
+        setUser(fetchedUser);
+      } else {
+        setUser(null);
+      }
     }
-  }, [id, users]);
+  }, [id, reduxUsers, fetchedUsers]);
 
   if (!user) return <p className="loading">User not found or loading...</p>;
 

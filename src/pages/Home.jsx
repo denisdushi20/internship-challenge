@@ -1,52 +1,47 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import AddUserForm from "../UserInterface/AddUserForm";
+import { addUser, updateUser, deleteUser } from "../store/userSlice";
 import "./Home.css";
 
 export default function Home() {
-  const [users, setUsers] = useState([]); 
-  const [localUsers, setLocalUsers] = useState([]); 
+  const dispatch = useDispatch();
+  const reduxUsers = useSelector((state) => state.users); 
+  const [fetchedUsers, setFetchedUsers] = useState([]); 
   const [search, setSearch] = useState("");
   const [editingUser, setEditingUser] = useState(null);
-
 
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/users")
       .then((res) => res.json())
-      .then(setUsers)
+      .then(setFetchedUsers)
       .catch(console.error);
   }, []);
 
-
-  useEffect(() => {
-    const stored = localStorage.getItem("localUsers");
-    if (stored) setLocalUsers(JSON.parse(stored));
-  }, []);
-
   const handleAddOrUpdateUser = (user) => {
-    let updatedLocal;
     if (editingUser) {
- 
-      updatedLocal = localUsers.map((u) => (u.id === user.id ? user : u));
+      if (reduxUsers.find((u) => u.id === user.id)) {
+        dispatch(updateUser(user));
+      } else {
+       
+        setFetchedUsers((prev) => prev.map((u) => (u.id === user.id ? user : u)));
+      }
       setEditingUser(null);
     } else {
-      updatedLocal = [user, ...localUsers];
+      dispatch(addUser(user));
     }
-    setLocalUsers(updatedLocal);
-    localStorage.setItem("localUsers", JSON.stringify(updatedLocal));
   };
 
   const handleDeleteUser = (id) => {
- 
-    const updatedLocal = localUsers.filter((u) => u.id !== id);
-    setLocalUsers(updatedLocal);
-    localStorage.setItem("localUsers", JSON.stringify(updatedLocal));
-
-    setUsers((prev) => prev.filter((u) => u.id !== id));
+    if (reduxUsers.find((u) => u.id === id)) {
+      dispatch(deleteUser(id));
+    } else {
+      setFetchedUsers((prev) => prev.filter((u) => u.id !== id));
+    }
   };
 
-  const allUsers = [...localUsers, ...users];
-
+  const allUsers = [...reduxUsers, ...fetchedUsers];
   const filteredUsers = allUsers.filter(
     (u) =>
       u.name.toLowerCase().includes(search.toLowerCase()) ||
