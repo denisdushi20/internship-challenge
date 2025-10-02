@@ -1,0 +1,47 @@
+.user-details-card {
+  max-width: 500px;
+  margin: 30px auto;
+  padding: 25px 30px;
+  background-color: #f9f9fb;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  text-align: left;
+  font-family: Arial, sans-serif;
+}
+
+.user-details-card h2 {
+  text-align: center;
+  color: #0b5fff;
+  margin-bottom: 20px;
+}
+
+.user-info p {
+  margin: 8px 0;
+  line-height: 1.5;
+  font-size: 14.5px;
+  color: #333;
+}
+
+.back-btn {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 16px;
+  background-color: #0b5fff;
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.back-btn:hover {
+  background-color: #084bcc;
+  transform: translateY(-2px);
+}
+
+.loading {
+  text-align: center;
+  color: #777;
+  margin-top: 50px;
+  font-size: 16px;
+}

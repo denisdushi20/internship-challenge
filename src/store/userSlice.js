@@ -2,9 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const usersSlice = createSlice({
   name: "users",
-  initialState: [],
+  initialState: [], 
   reducers: {
-    setUsers: (state, action) => action.payload,
+    setUsers: (state, action) => action.payload, 
     addUser: (state, action) => [action.payload, ...state],
     updateUser: (state, action) => {
       const index = state.findIndex((u) => u.id === action.payload.id);

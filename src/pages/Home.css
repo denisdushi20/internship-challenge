@@ -1,0 +1,63 @@
+.home-container {
+  font-family: Arial, sans-serif;
+}
+
+.header {
+  background: #0b5fff;
+  color: white;
+  padding: 16px;
+  text-align: center;
+}
+
+.main-content {
+  padding: 16px;
+}
+
+.search-input {
+  margin-bottom: 16px;
+  padding: 8px;
+  width: 300px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th, .table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.table th {
+  background: #0b5fff;
+  color: white;
+}
+
+.link {
+  text-decoration: none;
+  color: #0b5fff;
+}
+
+.button {
+  padding: 6px 12px;
+  margin-right: 4px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #0b5fff;
+  color: white;
+}
+
+.button-delete {
+  background-color: #ff4d4d;
+}
+
+.footer {
+  background: #f1f1f1;
+  padding: 12px;
+  margin-top: 24px;
+  text-align: center;
+}
